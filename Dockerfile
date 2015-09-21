@@ -9,6 +9,11 @@ RUN set -x \
     && apt-get -y install \
         imagemagick \
         php5-imagick \
+    && pecl channel-update pecl.php.net \
+    && echo -e "; configuration for php oauth module\n; priority=30\nextension=oauth.so" > /etc/php5/mods-available/oauth.ini \
+    && pear config-set php_ini /etc/php5/mods-available/oauth.ini \
+    && pecl install oauth \
+    && php5enmod oauth \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
